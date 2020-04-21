@@ -1,7 +1,5 @@
 # Catalog
 
-![Meet Catalog](https://paszternak.me/catalog-app/catalog_screen8.jpg)
-
 Catalog is a PHP + MySql application to manage your home library. If you don't care about who hosts your stuff, choose LibraryThing. If you want complex, almost library-like stuff, go for OpenBiblio, Koha or Evergreen. But if you want to own your book data and you would keep it simple without all the functionalities too much for an average user, Catalog is for you.
 
 Read on, or see [the Catalog Wiki](https://github.com/psztrnk/catalog/wiki) for more information.
@@ -36,7 +34,7 @@ With Catalog, you can
 
 ## Requirements
 
-- PHP 5.4+ with `mod_rewrite` enabled
+- PHP 7.0+ with `mod_rewrite` enabled
 - MySql 5.6+
 
 ## Installation
