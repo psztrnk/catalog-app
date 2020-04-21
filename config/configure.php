@@ -25,10 +25,10 @@ $apppassword = password::hash($_POST['apppassword']);
 $language = $_POST['language'];
 
 // create database for Catalog
-mysql_connect($server, $user, $password);
-if (! mysql_select_db($database)) {
-    mysql_query('CREATE DATABASE IF NOT EXISTS ' . $database . ' DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci');
-    mysql_select_db($database);
+$mysqli = new mysqli($server, $user, $password);
+if (!$mysqli->select_db($database)) {
+    $mysqli->query('CREATE DATABASE IF NOT EXISTS ' . $database . ' DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci');
+    $mysqli->select_db($database);
 }
 
 // connect to database
@@ -81,7 +81,7 @@ if ($language == 'en-US') {
 	            'a_str' => 'Sample Doe, John;Sample Doe, Jane',
 	            'g_str' => 'scifi,fantasy',
 	            'owner' => '1',
-	        ))) { 
+	        ))) {
 				// echo "<p>One book record created successfully.</p>";
 	} else {
 				 echo "ERROR: Catalog was unable to execute ".$datacreate_book;
@@ -103,7 +103,7 @@ if ($language == 'en-US') {
             'a_str' => 'Minta S&aacute;ndor;Minta Ferenc',
             'g_str' => 'scifi,atomfizika',
             'owner' => '1',
-        ))) { 
+        ))) {
 			// echo "<p>One book record created successfully.</p>";
 	} else {
 				 echo "ERROR: Catalog was unable to execute ".$datacreate_book;
@@ -137,11 +137,11 @@ if ($language == 'en-US') {
 	if ($datacreate_author = $select_authors->insert(array(
 				'book_id' => '1',
 	            'author' => 'Sample Doe, John',
-	        )) && 
+	        )) &&
 		$datacreate_secondauthor = $select_authors->insert(array(
 	            'book_id' => '1',
 	            'author' => 'Sample Doe, Jane',
-	        ))) { 
+	        ))) {
 				// echo "<p>Author records created successfully.</p>";
 	} else {
 				 echo "ERROR: Catalog was unable to execute ".$datacreate_author;
@@ -152,11 +152,11 @@ if ($language == 'en-US') {
 	if ($datacreate_author = $select_authors->insert(array(
 				'book_id' => '1',
 	            'author' => 'Minta S&aacute;ndor',
-	        )) && 
+	        )) &&
 		$datacreate_secondauthor = $select_authors->insert(array(
 	            'book_id' => '1',
 	            'author' => 'Minta Ferenc',
-	        ))) { 
+	        ))) {
 				// echo "<p>Author records created successfully.</p>";
 	} else {
 				 echo "ERROR: Catalog was unable to execute ".$datacreate_author;
@@ -194,7 +194,7 @@ if ($language == 'en-US') {
 		$datacreate_secondgenre = $select_genres->insert(array(
 		        'book_id' => '1',
 	            'genre' => 'fantasy',
-	        ))) { 
+	        ))) {
 				// echo "<p>Genre records created successfully.</p>";
 	} else {
 				 echo "ERROR: Catalog was unable to execute ". $datacreate_genre;
@@ -209,7 +209,7 @@ if ($language == 'en-US') {
 		$datacreate_secondgenre = $select_genres->insert(array(
 		        'book_id' => '1',
 	            'genre' => 'atomfizika',
-	        ))) { 
+	        ))) {
 				// echo "<p>Genre records created successfully.</p>";
 	} else {
 				 echo "ERROR: Catalog was unable to execute ". $datacreate_genre;
@@ -241,7 +241,7 @@ $select_users = $usersdb->table('users');
 if ($datacreate_user = $select_users->insert(array(
 			'user' => $appuser,
             'password' => $apppassword,
-        ))) { 
+        ))) {
 			// echo "<p>User record created successfully.</p>";
 } else {
 			 echo "ERROR: Catalog was unable to execute ". $datacreate_user;
