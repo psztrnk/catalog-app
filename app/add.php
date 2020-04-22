@@ -39,22 +39,22 @@ if (isset($_FILES['files'])) {
                 $result = $file->put('./ebooks');
                 $error = $result ? '' : 'Error moving file';
             }
-            
+
         } else {
             // oopps!
             $error = $file->get_error();
         }
         $filename = $file->name;
         // echo $file->name.' - '.($error ? ' [FAILED] '.$error : ' Succeeded!');
-        // echo '<br />'; 
+        // echo '<br />';
     }
 }
 
 
 // =========================== UPLOAD
-    
+
     $collection = $db->table('books');
-    
+
     $insert_author = utf8_encode($_POST['author']);
     $insert_title = $_POST['title'];
     $insert_isbn = $_POST['isbn'];
@@ -70,13 +70,13 @@ if (isset($_FILES['files'])) {
     } else {
         $insert_filename = NULL;
     }
-    
+
     if (isset($_POST['islent'])) {
-        
+
         $insert_islent = $_POST['islent'];
         $insert_lentto = $_POST['lentto'];
         $insert_lentat = $_POST['lentat'];
-        
+
         if ($id = $collection->insert(array(
             'title' => $insert_title,
             'isbn' => $insert_isbn,
@@ -92,13 +92,13 @@ if (isset($_FILES['files'])) {
             'g_str' => $insert_genre,
             'owner' => $insert_owner,
             'bookfile' => $insert_filename
-        
+
         ))) {
-            
+
             $bookid = $id;
         }
     } else {
-        
+
         if (!isset($_POST['isebook'])) {
             if ($id = $collection->insert(array(
                 'title' => $insert_title,
@@ -108,12 +108,15 @@ if (isset($_FILES['files'])) {
                 'description' => $insert_description,
                 'imgpath' => $insert_imgpath,
                 'location' => $insert_location,
+				'islent' =>'off',
+				'lentto' => NULL,
+				'lentat' => NULL,
                 'a_str' => $insert_author,
                 'g_str' => $insert_genre,
                 'owner' => $insert_owner,
-                'doctype' => 'paper'            
+                'doctype' => 'paper'
             ))) {
-                
+
                 $bookid = $id;
             }
 
@@ -132,21 +135,21 @@ if (isset($_FILES['files'])) {
                 'doctype' => 'ebook',
                 'bookfile' => $insert_filename
             ))) {
-                
+
                 $bookid = $id;
             }
 
         }
     }
-    
+
     $author_collection = $db->table('authors');
-    
+
     if (strpos($insert_author, ';') !== false) {
         $authors = explode(";", $insert_author);
         foreach ($authors as $author) {
-            
+
             $insert_author = trim($author);
-            
+
             if ($id = $author_collection->insert(array(
                 'author' => $insert_author,
                 'book_id' => $bookid
@@ -161,15 +164,15 @@ if (isset($_FILES['files'])) {
             ))) {}
         }
     }
-    
+
     $genre_collection = $db->table('genres');
-    
+
     if (strpos($insert_genre, ',') !== false) {
         $genres = explode(",", $insert_genre);
         foreach ($genres as $genre) {
-            
+
             $insert_genre = trim($genre);
-            
+
             if ($id = $genre_collection->insert(array(
                 'genre' => $insert_genre,
                 'book_id' => $bookid

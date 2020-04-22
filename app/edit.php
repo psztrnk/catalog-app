@@ -3,7 +3,7 @@
 	<i class="fa fa-pencil-square-o" aria-hidden="true"></i><?php echo $lang['EDIT_TITLE']; ?>
 </h2>
 
-<div id="item-list">   
+<div id="item-list">
 
 <?php
 
@@ -16,10 +16,10 @@ $url = $_SERVER['REQUEST_URI'];
 $id = parse_url($url, PHP_URL_QUERY);
 if (strpos($id, 'id=') !== FALSE) {
     $bookid = str_replace('id=', '', $id);
-    
+
     $item = $collection->find($bookid);
     $filename = $item->bookfile();
-    
+
     if (isset($_POST['submit'])) { // check if form was submitted
 
 // =========================== UPLOAD
@@ -48,7 +48,7 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
                 $result = $file->put('./ebooks');
                 $error = $result ? '' : 'Error moving file';
             }
-            
+
         } else {
             // oopps!
             $error = $file->get_error();
@@ -58,12 +58,12 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
             unlink('./ebooks/'.$old_filename);
         }
         // echo $file->name.' - '.($error ? ' [FAILED] '.$error : ' Succeeded!');
-        // echo '<br />'; 
+        // echo '<br />';
     }
 }
 
 // =========================== UPLOAD
-        
+
         $collection = $db->table('books');
         $insert_author = $_POST['author'];
         $insert_genre = $_POST['genre'];
@@ -75,13 +75,13 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
         $insert_imgpath = $_POST['imgpath'];
         $insert_location = $_POST['location'];
         $insert_filename = $filename;
-        
+
         if (isset($_POST['islent'])) {
-            
+
             $insert_islent = $_POST['islent'];
             $insert_lentto = $_POST['lentto'];
             $insert_lentat = $_POST['lentat'];
-            
+
             if (!isset($_POST['isebook'])) {
                 if ($id = $collection->where('id', '=', $_POST['id'])->update(array(
                     'title' => $insert_title,
@@ -113,7 +113,7 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
                     'a_str' => $insert_author,
                     'g_str' => $insert_genre,
                     'doctype' => 'ebook',
-                    'bookfile' => $insert_filename            
+                    'bookfile' => $insert_filename
                 ))) {}
 
             }
@@ -129,14 +129,17 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
                     'description' => $insert_description,
                     'imgpath' => $insert_imgpath,
                     'location' => $insert_location,
+					'islent' =>'off',
+                    'lentto' => NULL,
+                    'lentat' => NULL,
                     'a_str' => $insert_author,
                     'g_str' => $insert_genre,
                     'doctype' => 'paper'
-                
+
                 ))) {}
 
             } else {
-            
+
                 if ($id = $collection->where('id', '=', $_POST['id'])->update(array(
                     'title' => $insert_title,
                     'isbn' => $insert_isbn,
@@ -149,16 +152,16 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
                     'g_str' => $insert_genre,
                     'doctype' => 'ebook',
                     'bookfile' => $insert_filename
-                
+
                 ))) {}
 
             }
         }
-        
+
         $insert_author = $_POST['author'];
         $author_collection = $db->table('authors');
         $author_collection->where('book_id', '=', $bookid)->delete();
-        
+
         if (strpos($insert_author, ';') !== false) {
             if (substr($insert_author, - 1) == ';') {
                 $insertable_author = substr($insert_author, 0, - 1);
@@ -167,9 +170,9 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
             }
             $authors = explode(";", $insertable_author);
             foreach ($authors as $author) {
-                
+
                 $insert_author = trim($author);
-                
+
                 if ($id = $author_collection->insert(array(
                     'author' => $insert_author,
                     'book_id' => $bookid
@@ -177,19 +180,19 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
             }
         } else {
             $insert_author = $_POST['author'];
-            
+
             if ($id = $author_collection->insert(array(
                 'author' => $insert_author,
                 'book_id' => $bookid
             ))) {}
         }
-        
+
         $insert_genre = $_POST['genre'];
         $genre_collection = $db->table('genres');
         $genre_collection->select('*')
             ->where('book_id', '=', $bookid)
             ->delete();
-        
+
         if (strpos($insert_genre, ',') !== false) {
             if (substr($insert_genre, - 1) == ',') {
                 $insertable_genre = substr($insert_genre, 0, - 1);
@@ -198,9 +201,9 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
             }
             $genres = explode(",", $insertable_genre);
             foreach ($genres as $genre) {
-                
+
                 $insert_genre = trim($genre);
-                
+
                 if ($id = $genre_collection->insert(array(
                     'genre' => $insert_genre,
                     'book_id' => $bookid
@@ -209,23 +212,23 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
         } else {
             $insert_genre = $_POST['genre'];
             if ($insert_genre != '') {
-                
+
                 if ($id = $genre_collection->insert(array(
                     'genre' => $insert_genre,
                     'book_id' => $bookid
                 ))) {}
             }
         }
-        
+
         echo '<p>' . $lang['MODIFIED_SUCCESS'] . '<a href="display?id=' . $_POST['id'] . '">' . $lang['MODIFIED_SUCCESS_REDIRECT'] . '</a>.</p>';
     } else {
         ?>
-             
+
     <form action="" method="post" enctype="multipart/form-data">
 
 		<input type="hidden" name="id" value="<?php echo $item->id() ?>" /> <label
 			class="add-new-item"><i class="fa fa-user" aria-hidden="true"></i>
-            <?php echo $lang['ADD_AUTHOR_LABEL'] ?></label> 
+            <?php echo $lang['ADD_AUTHOR_LABEL'] ?></label>
             <?php $authors = $db->table('authors')->select('author')->where('book_id', '=', $bookid)->all();?>
             <input class="add-item-input" type="text" name="author"
 			value="<?php $y = $authors->count(); $i = 1; foreach($authors as $author){echo($author->author());if($i!=$y){echo('; ');$i++;}}?>" />
@@ -268,7 +271,7 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
 
                 <label class="add-new-item"><i class="fa fa-file-text-o" aria-hidden="true"></i> <?php echo $lang['EDIT_EBOOK_CURRENTFILE'] ?></label>
                 <p>
-                    <?php 
+                    <?php
                         if ($item->bookfile() != NULL) {
                             echo '<a href="ebooks/'.$item->bookfile().'">'.$item->bookfile().'</a>';
                         } else {
@@ -281,7 +284,7 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
                     aria-hidden="true"></i> <?php echo $lang['EDIT_EBOOK_ADDNEWFILE'] ?></label>
                 <input class="upload" type="file" name="files[]" />
             </div>
-        </div>        
+        </div>
 
 		<div class="book-lent">
 			<input type="checkbox" name="islent" id="iflent"
