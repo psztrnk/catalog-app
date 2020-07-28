@@ -85,7 +85,7 @@ if (strpos($id, 'id=') !== FALSE) {
 					<label class="view-item-label"><i class="fa fa-align-left"
 		aria-hidden="true"></i> <?php echo $lang['DISPLAY_DESCRIPTION_LABEL']; ?></label>
 	<div class="view-item-info">
-		<p><?php str_replace(array("\r\n", "\n", "\r"), '</p><p>', $item->description() ); ?></p>
+		<p><?php echo str_replace(array("\r\n", "\n", "\r"), '</p><p>', $item->description() ); ?></p>
 	</div>
 					<?php } ?>
 					<?php if($item->location() != '') { ?>
