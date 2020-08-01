@@ -10,6 +10,7 @@ Read on, or see [the Catalog Wiki](https://github.com/psztrnk/catalog/wiki) for 
 2. Download and unpack the `.zip` file.
 3. Overwrite all files **except your `config` folder** of your Catalog installation with the contents of the `zip`.
 4. Basically that's it. The update script will handle the rest.
+5. If anything breaks, please restore your installation and open an issue on GitHub.
 
 ## Features
 
