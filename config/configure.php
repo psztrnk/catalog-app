@@ -44,9 +44,11 @@ $db = new Database(array(
 $sql_book = $db->createTable('books', $columns = array(
 		'id' => array('type' => 'id',),
 		'title' => array('type' => 'varchar',),
+		'o_title' => array('type' => 'varchar',),
 		'isbn' => array('type' => 'varchar',),
 		'publisher' => array('type' => 'varchar',),
 		'year' => array('type' => 'varchar',),
+		'language' => array('type' => 'varchar',),
 		'description' => array('type' => 'text',),
 		'imgpath' => array('type' => 'varchar',),
 		'islent' => array('type' => 'varchar',),
@@ -55,6 +57,8 @@ $sql_book = $db->createTable('books', $columns = array(
 		'a_str' => array('type' => 'varchar',),
 		'g_str' => array('type' => 'varchar',),
 		'location' => array('type' => 'varchar',),
+		'series' => array('type' => 'varchar',),
+		'volume' => array('type' => 'int',),
 		'doctype' => array('type' => 'varchar',),
 		'bookfile' => array('type' => 'varchar',),
 		'owner' => array('type' => 'int',),
@@ -70,9 +74,11 @@ if ($language == 'en-US') {
 	if ($datacreate_book = $collection->insert(array(
 				'id' => '1',
 	            'title' => 'This is a Sample Book',
+	            'o_title' => 'Pulp Fiction',
 	            'isbn' => '9789635581696',
 	            'publisher' => 'Sample Publishing Inc.',
 	            'year' => '2011',
+	            'language' => 'English',
 	            'description' => 'My money\'s in that office, right? If she start giving me some bullshit about it ain\'t there, and we got to go someplace else and get it, I\'m gonna shoot you in the head then and there. Then I\'m gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I\'m talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?',
 	            'imgpath' => 'https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg',
 	            'islent' => 'on',
@@ -80,6 +86,8 @@ if ($language == 'en-US') {
 	            'lentat' => '12/31/2016',
 	            'a_str' => 'Sample Doe, John;Sample Doe, Jane',
 	            'g_str' => 'scifi,fantasy',
+	            'series' => 'Sample Books',
+	            'volume' => '1',
 	            'owner' => '1',
 	        ))) {
 				// echo "<p>One book record created successfully.</p>";
@@ -92,9 +100,11 @@ if ($language == 'en-US') {
 	if ($datacreate_book = $collection->insert(array(
 			'id' => '1',
             'title' => 'Ez egy mintak&ouml;nyv',
+            'o_title' => 'Pulp Fiction',
             'isbn' => '9789635581696',
             'publisher' => 'Minta k&ouml;nyvkiad&oacute;',
             'year' => '2011',
+            'language' => 'magyar',
             'description' => 'L&oacute;rum ipse mint l&eacute;l&odblac; zsebe cselti, els&odblac;sorban egy omszer&udblac; d&ouml;nde. Ez&aacute;ltal a m&aacute;s fenty&udblac;kben ter&aacute;nok is zatm&aacute;zj&aacute;k a setle csattas&aacute;gokat. Duzzadt sihegyel&eacute;sen ez oda b&aacute;nos, hogy a bord lent&eacute;sek k&ouml;nnyen fogatozhatnak a csozatr&oacute;l, ami a r&aacute;cika rad&eacute;r&aacute;nak pistam&aacute;t hajhatja. A sz&aacute;d&aacute;kb&oacute;l v&eacute;tl&odblac;s &ouml;zven hez&eacute;s pocsom&aacute;val a csattas&aacute;gok r&uuml;lemei kerelik dorojtnak, mint &ouml;k&eacute;neik&eacute;. Az ez&aacute;ltal meltor v&aacute;ncb&oacute;l egyre t&ouml;bbet horn&aacute;lnak neg&eacute;gbe, zugs&aacute;gba, a figyel&odblac; lakton&aacute;nak sp&aacute;s&aacute;ba stb., ami tov&aacute;bb pisz&iacute;jazja a csep&eacute;ses hajdog&aacute;juk gemm&aacute;j&aacute;t. &Iacute;gy m&eacute;g t&ouml;bb sz&eacute;dez&eacute;st tudnak reperednie szav&aacute;ikt&oacute;l, a pr&aacute;for&aacute;ny teh&aacute;t kedik. A tatlamlan erezs&eacute;gb&odblac;l k&ouml;ny&ouml;s s&uuml;g&eacute;sb&odblac;l pedig egyre kevesebbet cengomnak &aacute;t a hajk&oacute;coknak, hiszen egyre kev&eacute;sb&eacute; z&ouml;ty&ouml;g&odblac; a r&aacute;cika. A setle part magyalinok teh&aacute;t gy&uuml;m&ouml;s pad&aacute;sban egyszerre lehetnek k&eacute;szt&odblac;i &eacute;s kermez&odblac; golyomokban is k&eacute;r&odblac;k.',
             'imgpath' => 'https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg',
             'islent' => 'on',
@@ -102,6 +112,8 @@ if ($language == 'en-US') {
             'lentat' => '12/31/2016',
             'a_str' => 'Minta S&aacute;ndor;Minta Ferenc',
             'g_str' => 'scifi,atomfizika',
+						'series' => 'P&eacute;ldak&ouml;nyvek',
+						'volume' => '1',
             'owner' => '1',
         ))) {
 			// echo "<p>One book record created successfully.</p>";

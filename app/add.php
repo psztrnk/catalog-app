@@ -57,13 +57,21 @@ if (isset($_FILES['files'])) {
 
     $insert_author = utf8_encode($_POST['author']);
     $insert_title = $_POST['title'];
+		if ($_POST['o_title'] == '') {
+    	$insert_o_title = $_POST['title'];
+		} else {
+			$insert_o_title = $_POST['o_title'];
+		}
     $insert_isbn = $_POST['isbn'];
     $insert_publisher = $_POST['publisher'];
     $insert_year = $_POST['year'];
+    $insert_language = $_POST['language'];
     $insert_description = $_POST['description'];
     $insert_genre = $_POST['genre'];
     $insert_imgpath = $_POST['imgpath'];
     $insert_location = $_POST['location'];
+    $insert_series = $_POST['series'];
+    $insert_volume = $_POST['volume'];
     $insert_owner = $_SESSION['user_id'];
     if(isset($filename)) {
         $insert_filename = $filename;
@@ -79,12 +87,16 @@ if (isset($_FILES['files'])) {
 
         if ($id = $collection->insert(array(
             'title' => $insert_title,
+            'o_title' => $insert_o_title,
             'isbn' => $insert_isbn,
             'publisher' => $insert_publisher,
             'year' => $insert_year,
+            'language' => $insert_language,
             'description' => $insert_description,
             'imgpath' => $insert_imgpath,
             'location' => $insert_location,
+            'series' => $insert_series,
+            'volume' => $insert_volume,
             'islent' => $insert_islent,
             'lentto' => $insert_lentto,
             'lentat' => $insert_lentat,
@@ -102,15 +114,19 @@ if (isset($_FILES['files'])) {
         if (!isset($_POST['isebook'])) {
             if ($id = $collection->insert(array(
                 'title' => $insert_title,
+								'o_title' => $insert_o_title,
                 'isbn' => $insert_isbn,
                 'publisher' => $insert_publisher,
                 'year' => $insert_year,
+								'language' => $insert_language,
                 'description' => $insert_description,
                 'imgpath' => $insert_imgpath,
                 'location' => $insert_location,
-				'islent' =>'off',
-				'lentto' => NULL,
-				'lentat' => NULL,
+								'series' => $insert_series,
+		            'volume' => $insert_volume,
+								'islent' =>'off',
+								'lentto' => NULL,
+								'lentat' => NULL,
                 'a_str' => $insert_author,
                 'g_str' => $insert_genre,
                 'owner' => $insert_owner,
@@ -123,12 +139,16 @@ if (isset($_FILES['files'])) {
         } else {
             if ($id = $collection->insert(array(
                 'title' => $insert_title,
+								'o_title' => $insert_o_title,
                 'isbn' => $insert_isbn,
                 'publisher' => $insert_publisher,
                 'year' => $insert_year,
+								'language' => $insert_language,
                 'description' => $insert_description,
                 'imgpath' => $insert_imgpath,
                 'location' => $insert_location,
+								'series' => $insert_series,
+		            'volume' => $insert_volume,
                 'a_str' => $insert_author,
                 'g_str' => $insert_genre,
                 'owner' => $insert_owner,
@@ -192,28 +212,74 @@ if (isset($_FILES['files'])) {
     ?>
 
     <form action="" method="post" enctype="multipart/form-data">
-		<label class="add-new-item"><i class="fa fa-user" aria-hidden="true"></i>
-            <?php echo $lang['ADD_AUTHOR_LABEL'] ?></label> <input
-			class="add-item-input" type="text" name="author" /><label
-			class="add-new-item"><i class="fa fa-font" aria-hidden="true"></i>
-            <?php echo $lang['ADD_TITLE_LABEL'] ?></label> <input
-			class="add-item-input" type="text" name="title" required /> <label
-			class="add-new-item"><i class="fa fa-barcode" aria-hidden="true"></i> <?php echo $lang['ADD_ISBN_LABEL'] ?></label>
-		<input class="add-item-input" type="text" name="isbn" /> <label
-			class="add-new-item"><i class="fa fa-building" aria-hidden="true"></i>
-            <?php echo $lang['ADD_PUBLISHER_LABEL'] ?></label> <input
-			class="add-item-input" type="text" name="publisher" /> <label
-			class="add-new-item"><i class="fa fa-calendar" aria-hidden="true"></i> <?php echo $lang['ADD_YEAR_LABEL'] ?></label>
-		<input class="add-item-input" type="text" name="year" /> <label
-			class="add-new-item"><i class="fa fa-tag" aria-hidden="true"></i> <?php echo $lang['ADD_GENRE_LABEL'] ?></label>
-		<input class="add-item-input" type="text" name="genre" /> <label
-			class="add-new-item"><i class="fa fa-file-image-o" aria-hidden="true"></i> <?php echo $lang['ADD_COVER_LABEL'] ?></label>
-		<input class="add-item-input" type="text" name="imgpath" /> <label
-			class="add-new-item"><i class="fa fa-align-left" aria-hidden="true"></i> <?php echo $lang['ADD_DESCRIPTION_LABEL'] ?></label>
-		<textarea class="add-item-input" type="text" name="description"></textarea>
-		<label class="add-new-item"><i class="fa fa-compass"
-			aria-hidden="true"></i> <?php echo $lang['ADD_LOCATION_LABEL'] ?></label>
-		<input class="add-item-input" type="text" name="location" />
+			<label class="add-new-item">
+				<i class="fa fa-user" aria-hidden="true"></i>
+        <?php echo $lang['ADD_AUTHOR_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="author" />
+			<label class="add-new-item">
+				<i class="fa fa-font" aria-hidden="true"></i>
+        <?php echo $lang['ADD_TITLE_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="title" required />
+			<label class="add-new-item">
+				<i class="fa fa-language" aria-hidden="true"></i>
+        <?php echo $lang['ADD_O_TITLE_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="o_title" />
+			<label class="add-new-item">
+				<i class="fa fa-barcode" aria-hidden="true"></i>
+				<?php echo $lang['ADD_ISBN_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="isbn" />
+			<label class="add-new-item">
+				<i class="fa fa-building" aria-hidden="true"></i>
+        <?php echo $lang['ADD_PUBLISHER_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="publisher" />
+			<label class="add-new-item">
+				<i class="fa fa-calendar" aria-hidden="true"></i>
+				<?php echo $lang['ADD_YEAR_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="year" />
+			<label class="add-new-item">
+				<i class="fa fa-globe" aria-hidden="true"></i>
+				<?php echo $lang['ADD_LANGUAGE_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="language" />
+			<label class="add-new-item">
+				<i class="fa fa-tag" aria-hidden="true"></i>
+				<?php echo $lang['ADD_GENRE_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="genre" />
+			<label class="add-new-item">
+				<i class="fa fa-file-image-o" aria-hidden="true"></i>
+				<?php echo $lang['ADD_COVER_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="imgpath" />
+			<label class="add-new-item">
+				<i class="fa fa-align-left" aria-hidden="true"></i>
+				<?php echo $lang['ADD_DESCRIPTION_LABEL'] ?>
+			</label>
+			<textarea class="add-item-input" type="text" name="description"></textarea>
+
+			<label class="add-new-item">
+				<i class="fa fa-clone" aria-hidden="true"></i>
+				<?php echo $lang['ADD_SERIES_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="series" />
+
+			<label class="add-new-item">
+				<i class="fa fa-list-ol" aria-hidden="true"></i>
+				<?php echo $lang['ADD_VOLUME_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="number" name="volume" />
+
+			<label class="add-new-item">
+				<i class="fa fa-compass" aria-hidden="true"></i>
+				<?php echo $lang['ADD_LOCATION_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="location" />
 
         <div class="book-ebook">
             <input type="checkbox" name="isebook" id="ifebook"

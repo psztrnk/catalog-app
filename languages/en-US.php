@@ -56,12 +56,16 @@ $lang['ADDED_SUCCESS'] = 'Item successfully added to the collection. ';
 $lang['ADDED_SUCCESS_REDIRECT'] = 'You can now view the item';
 $lang['ADD_AUTHOR_LABEL'] = 'Author<span>(s) &ndash; separated by semicolon (;)</span>';
 $lang['ADD_TITLE_LABEL'] = 'Title';
+$lang['ADD_O_TITLE_LABEL'] = 'Original Title <span> &ndash; leave empty if the same as Title</span>';
 $lang['ADD_ISBN_LABEL'] = 'ISBN';
 $lang['ADD_PUBLISHER_LABEL'] = 'Publisher';
 $lang['ADD_YEAR_LABEL'] = 'Year Published';
+$lang['ADD_LANGUAGE_LABEL'] = 'Language';
 $lang['ADD_GENRE_LABEL'] = 'Genre<span>(s) &ndash; separated by comma (,)</span>';
 $lang['ADD_COVER_LABEL'] = 'Cover Image URL';
 $lang['ADD_DESCRIPTION_LABEL'] = 'Description';
+$lang['ADD_VOLUME_LABEL'] = 'Volume<span> &ndash; numbers only</span>';
+$lang['ADD_SERIES_LABEL'] = 'This book belongs to the following Series';
 $lang['ADD_LOCATION_LABEL'] = 'Location <span> Room, shelf, row etc.</span>';
 $lang['ADD_IFLENT_LABEL'] = 'This book is lent';
 $lang['ADD_LENTTO_LABEL'] = 'Lent to';
@@ -92,8 +96,11 @@ $lang['DISPLAY_AUTHOR_LABEL'] = 'Author';
 $lang['DISPLAY_ISBN_LABEL'] = 'ISBN Number';
 $lang['DISPLAY_PUBLISHER_LABEL'] = 'Publisher';
 $lang['DISPLAY_YEAR_LABEL'] = 'Year Published';
+$lang['DISPLAY_LANGUAGE_LABEL'] = 'Language';
+$lang['DISPLAY_O_TITLE_LABEL'] = 'Original Title';
 $lang['DISPLAY_GENRE_LABEL'] = 'Genre';
 $lang['DISPLAY_DESCRIPTION_LABEL'] = 'Description';
+$lang['DISPLAY_SERIES_LABEL'] = 'This book is part of a Series';
 $lang['DISPLAY_LOCATION_LABEL'] = 'Location';
 $lang['DISPLAY_LENT_NOTE'] = 'You\'ve lent this book';
 $lang['DISPLAY_LENTTO_REF'] = ' to ';
@@ -134,6 +141,34 @@ $lang['DISPLAY_YEAR_TITLE_SUFFIX'] = '';
 $lang['DISPLAY_YEAR_OWN'] = 'You own ';
 $lang['DISPLAY_YEAR_PUBLISHEDIN'] = ' published in ';
 $lang['DISPLAY_YEAR_SUFFIX'] = '.';
+
+// display original title
+
+$lang['DISPLAY_O_TITLE_TITLE'] = 'Books with Original Title: ';
+$lang['DISPLAY_O_TITLE_TITLE_SUFFIX'] = '';
+$lang['DISPLAY_O_TITLE_OWN'] = 'You own ';
+$lang['DISPLAY_O_TITLE_PUBLISHEDIN'] = ' where the original title is "';
+$lang['DISPLAY_O_TITLE_SUFFIX'] = '".';
+
+// display Language
+
+$lang['DISPLAY_LANGUAGE_TITLE'] = 'Books in ';
+$lang['DISPLAY_LANGUAGE_TITLE_SUFFIX'] = ' language';
+$lang['DISPLAY_LANGUAGE_OWN'] = 'You own ';
+$lang['DISPLAY_LANGUAGE_PUBLISHEDIN'] = ' written in ';
+$lang['DISPLAY_LANGUAGE_SUFFIX'] = ' language.';
+
+// display series
+
+$lang['DISPLAY_SERIES_TITLE'] = 'Books in the series: ';
+$lang['DISPLAY_SERIES_TITLE_SUFFIX'] = '';
+$lang['DISPLAY_LANGUAGE_OWN'] = 'You own ';
+$lang['DISPLAY_LANGUAGE_PUBLISHEDIN'] = ' from the "';
+$lang['DISPLAY_LANGUAGE_SUFFIX'] = '" series.';
+
+$lang['VOLUME_PREFIX'] = 'Volume ';
+$lang['VOLUME_SUFFIX'] = '';
+$lang['VOLUME'] = 'Volume';
 
 // display ebooks
 
@@ -207,12 +242,15 @@ $lang['SFIELD_AUTHOR'] = ' in author';
 $lang['SFIELD_PUBLISH'] = ' in publication data';
 $lang['SFIELD_ISBN'] = ' in ISBN number';
 $lang['SFIELD_GENRE'] = ' in genre';
+$lang['SFIELD_LANGUAGE'] = ' as language';
 $lang['SFIELD_DESCRIPTION'] = ' in description';
+$lang['SFIELD_SERIES'] = ' in series title';
 $lang['SFIELD_LOCATION'] = ' in book location';
 $lang['SFIELD_LENT'] = ' in lending data';
 $lang['SFIELD_ALL'] = ' in all fields';
 $lang['SEARCH_REASULTCOUNT_PREFIX'] = 'There ';
-$lang['SEARCH_REASULTCOUNT_SUFFIX'] = ' results for your search.';
+$lang['SEARCH_REASULTCOUNT_SINGULAR_SUFFIX'] = ' result for your search.';
+$lang['SEARCH_REASULTCOUNT_PLURAL_SUFFIX'] = ' results for your search.';
 $lang['SEARCH_NORESULTS'] = 'No results.';
 
 // collection
@@ -254,7 +292,9 @@ $lang['HELP_SEARCH_CONTENT'] = '<p>To perform a simple search, simply put a sear
 <li><strong><code>publish: [term]</code></strong>: searches in two fields: the publisher and the year published. By searching for <code>publish: office</code>, Catalog will return all books published by "Office Books Ltd.", but not the books located in your office or titled "Getting Started with LibreOffice". By searchnig for <code>publish: 199</code>, Catalog will return all books published in the 1990\'s, but not the books having "199" in their ISBNs;</li>
 <li><strong><code>isbn: [term]</code></strong>: by searching for <code>isbn: 199</code>, Catalog will return all books having "199" in their ISBNs, but not the books published in the 1990\'s;</li>
 <li><strong><code>genre: [term]</code></strong>: by searching for <code>genre: office</code>, Catalog will return all books with the genre tag "LibreOffice", but not the books located in your office or published by "Office Books Ltd.";</li>
+<li><strong><code>lang: [term]</code></strong>: by searching for <code>lang: english</code>, Catalog will return all books with the language tag "English", but not the book "Johnny English: De nuevo en acción";</li>
 <li><strong><code>description: [term]</code></strong>: searching for <code>description: john smith</code> is extremely helpful, if you e.g. remember that the main protagonist of the novel is "John Smith", but you\'d like to ignore all the books written by "John Smith";</li>
+<li><strong><code>series: [term]</code></strong>: searching for <code>series: sample</code> will return all books in the "Sample Books" series, but not the book with the title "This is a Sample book" (unless it is part of the series);</li>
 <li><strong><code>location: [term]</code></strong>: by searching for <code>location: office</code>, Catalog will return all the books located in your office but not the books about "LibreOffice" or the books published by "Office Books Ltd.";</li>
 <li><strong><code>lent: [term]</code></strong>: searches in two fields: the "lent to" and the "lent at". By searching for <code>lent: john smith</code>, Catalog will return all the books you\'ve lent to Johnny, but not the books written by a "John Smith". By searching for <code>lent: 2016</code>, Catalog will return all the books you\'ve lent in 2016 (it is probably time to get back those, by the way).</li>
 </ul>';

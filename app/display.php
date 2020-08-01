@@ -7,7 +7,7 @@ $url = $_SERVER['REQUEST_URI'];
 $id = parse_url($url, PHP_URL_QUERY);
 if (strpos($id, 'id=') !== FALSE) {
     $bookid = str_replace('id=', '', $id);
-    
+
     $item = $collection->find($bookid);
     ?>
 
@@ -20,7 +20,7 @@ if (strpos($id, 'id=') !== FALSE) {
 			<a class="item-action download" href="ebooks/<?php echo $item->bookfile() ?>"><i class="fa fa-download" aria-hidden="true"></i></a>
 
 					<?php }
-						if ($item->doctype() == 'ebook') { 
+						if ($item->doctype() == 'ebook') {
 							echo $lang['DISPLAY_EBOOK_TITLE_PREFIX'];
 						}
 						echo $item->title();
@@ -46,7 +46,7 @@ if (strpos($id, 'id=') !== FALSE) {
         foreach ($authors as $author) {
             echo '<a href="display?author=' . urlencode($author->author()) . '">' . $author->author() . '</a><br />';
         }
-        
+
         echo '</p>';
     }
     ?>
@@ -65,7 +65,17 @@ if (strpos($id, 'id=') !== FALSE) {
 		aria-hidden="true"></i> <?php echo $lang['DISPLAY_YEAR_LABEL']; ?></label>
 	<p class="view-item-info"><?php echo '<a href="display?year='.urlencode($item->year()).'">'.$item->year().'</a>' ?></p>
 					<?php } ?>
-					
+          <?php if($item->language() != '') { ?>
+					<label class="view-item-label"><i class="fa fa-globe"
+		aria-hidden="true"></i> <?php echo $lang['DISPLAY_LANGUAGE_LABEL']; ?></label>
+	<p class="view-item-info"><?php echo '<a href="display?lang='.urlencode($item->language()).'">'.$item->language().'</a>' ?></p>
+					<?php } ?>
+          <?php if($item->o_title() != '') { ?>
+					<label class="view-item-label"><i class="fa fa-language"
+		aria-hidden="true"></i> <?php echo $lang['DISPLAY_O_TITLE_LABEL']; ?></label>
+	<p class="view-item-info"><?php echo '<a href="display?o_title='.urlencode($item->o_title()).'">'.$item->o_title().'</a>' ?></p>
+					<?php } ?>
+
 						<?php
     $genres = $db->table('genres')
         ->select('genres.genre', 'genres.book_id')
@@ -88,6 +98,11 @@ if (strpos($id, 'id=') !== FALSE) {
 		<p><?php echo str_replace(array("\r\n", "\n", "\r"), '</p><p>', $item->description() ); ?></p>
 	</div>
 					<?php } ?>
+          <?php if($item->series() != '') { ?>
+					<label class="view-item-label"><i class="fa fa-clone"
+		aria-hidden="true"></i> <?php echo $lang['DISPLAY_SERIES_LABEL']; ?></label>
+	<p class="view-item-info"><?php echo '<a href="display?series='.urlencode($item->series()).'">'.$item->series().'</a>, '.$lang['VOLUME_PREFIX']; ?><?php echo $item->volume().$lang['VOLUME_SUFFIX']; ?></p>
+					<?php } ?>
 					<?php if($item->location() != '') { ?>
 					<label class="view-item-label"><i class="fa fa-compass"
 		aria-hidden="true"></i> <?php echo $lang['DISPLAY_LOCATION_LABEL']; ?></label>
@@ -101,23 +116,32 @@ if (strpos($id, 'id=') !== FALSE) {
 
 <?php
 } else if (strpos($id, 'author=') !== FALSE) {
-    
+
     include_once ('display-author.php');
 } else if (strpos($id, 'publisher=') !== FALSE) {
-    
+
     include_once ('display-publisher.php');
 } else if (strpos($id, 'year=') !== FALSE) {
-    
+
     include_once ('display-year.php');
+} else if (strpos($id, 'lang=') !== FALSE) {
+
+    include_once ('display-language.php');
+} else if (strpos($id, 'o_title=') !== FALSE) {
+
+    include_once ('display-o_title.php');
 } else if (strpos($id, 'genre=') !== FALSE) {
-    
+
     include_once ('display-genre.php');
 } else if (strpos($id, 'lent=on') !== FALSE) {
-    
+
     include_once ('display-lent.php');
 } else if (strpos($id, 'doctype=ebook') !== FALSE) {
-    
+
     include_once ('display-ebooks.php');
+} else if (strpos($id, 'series=') !== FALSE) {
+
+    include_once ('display-series.php');
 }
 ?>
 

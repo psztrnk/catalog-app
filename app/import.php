@@ -13,11 +13,11 @@ include_once ('snippets/header.php');
 if (! isset($molyapi)) {
     echo $lang['FIND_MOLY_API_INSTRUCTIONS'];
 } else {
-    
+
     $isbn = $_POST['isbn'];
-    
+
     error_reporting(E_ERROR | E_PARSE);
-    
+
     $bbi = file_get_contents('https://moly.hu/api/book_by_isbn.json?q=' . $isbn . '&key=' . $molyapi);
     if ($bbi) {
         $book_by_isbn = json_decode($bbi);
@@ -26,13 +26,13 @@ if (! isset($molyapi)) {
         $author = $book_by_isbn->author;
         $title = $book_by_isbn->title;
         sleep(1);
-        
+
         $b = file_get_contents('https://moly.hu/api/book_editions/' . $book_id . '.json?key=' . $molyapi);
         $book = json_decode($b);
         $publisher = $book->editions[0]->publisher;
         $year = $book->editions[0]->year;
         sleep(1);
-        
+
         $bm = file_get_contents('https://moly.hu/api/book/' . $book_id . '.json?key=' . $molyapi);
         $book_meta = json_decode($bm);
         $description = $book_meta->book->description;
@@ -42,7 +42,7 @@ if (! isset($molyapi)) {
 <p class="helper">
 		<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 <?php
-    
+
 if (! $bbi) {
         echo $lang['IMPORT_NOTFOUND'];
     } else {
@@ -72,6 +72,11 @@ if (! $bbi) {
 			<?php echo $lang['ADD_YEAR_LABEL'] ?></label> <input
 			class="add-item-input" type="number" name="year"
 			value="<?php echo trim($year); ?>" /> <label class="add-new-item"><i
+			value="<?php echo trim($publisher); ?>" /> <label
+			class="add-new-item"><i class="fa fa-globe" aria-hidden="true"></i>
+			<?php echo $lang['ADD_LANGUAGE_LABEL'] ?></label> <input
+			class="add-item-input" type="text" name="language"
+			value="" /> <label class="add-new-item"><i
 			class="fa fa-filter" aria-hidden="true"></i> <?php echo $lang['ADD_GENRE_LABEL'] ?></label>
 		<input class="add-item-input" type="text" name="genre" value="" /> <label
 			class="add-new-item"><i class="fa fa-file-image-o" aria-hidden="true"></i><?php echo $lang['ADD_COVER_LABEL'] ?></label>

@@ -23,6 +23,14 @@ if (logged_in() == false) {
     } else {
         include_once ('./languages/en-US.php');
     }
+    // check whether version is latest
+    if (! file_exists('./config/version') || file_get_contents('./config/version') != '1.1') {
+      include_once ('./app/update.php');
+    }
+
+    $lent_num = $catalog_db->where(array('islent' => 'on'))->count();
+    $ebook_num = $catalog_db->where(array('doctype' => 'ebook'))->count();
+
     ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -50,7 +58,6 @@ if (logged_in() == false) {
 </head>
 
 <body>
-
 	<main class="main" role="main"> <header id="app-header">
 		<h1>
 			C<span>atalog</span>
@@ -64,9 +71,9 @@ if (logged_in() == false) {
 				<li
 					class="menu add <?php if(strpos($path, 'add') !== FALSE || strpos($path, 'insert') !== FALSE) { echo 'active'; } ?>"><a
 					href="./add"><i class="fa fa-plus" aria-hidden="true"></i><span><?php echo $lang['MENU_ADD']; ?></span></a></li>
-				<li
+				<?php if (isset($molyapi)) { ?><li
 					class="menu import <?php if(strpos($path, 'import') !== FALSE || strpos($path, 'find') !== FALSE) { echo 'active'; } ?>"><a
-					href="./find"><i class="fa fa-cloud-download" aria-hidden="true"></i><span><?php echo $lang['MENU_IMPORT']; ?></span></a></li>
+					href="./find"><i class="fa fa-cloud-download" aria-hidden="true"></i><span><?php echo $lang['MENU_IMPORT']; ?></span></a></li><?php } ?>
 				<li
 					class="menu authors <?php if(strpos($path, 'authors') !== FALSE) { echo 'active'; } ?>"><a
 					href="./authors"><i class="fa fa-users" aria-hidden="true"></i><span><?php echo $lang['MENU_AUTHORS']; ?></span></a></li>
@@ -76,12 +83,12 @@ if (logged_in() == false) {
 				<li
 					class="menu genres <?php if(strpos($path, 'genres') !== FALSE) { echo 'active'; } ?>"><a
 					href="./genres"><i class="fa fa-tags" aria-hidden="true"></i><span><?php echo $lang['MENU_GENRES']; ?></span></a></li>
-				<li
+				<?php if($lent_num != 0) { ?><li
 					class="menu lent <?php if(strpos($path, 'lent') !== FALSE) { echo 'active'; } ?>"><a
 					href="./display?lent=on"><i class="fa fa-handshake-o"
-						aria-hidden="true"></i><span><?php echo $lang['MENU_LENT']; ?></span></a></li>
-				<li class="menu ebooks <?php if(strpos($path, 'ebook') !== FALSE) { echo 'active'; } ?>"><a href="./display?doctype=ebook"><i class="fa fa-plug"
-						aria-hidden="true"></i> <span><?php echo $lang['MENU_EBOOKS']; ?></span></a></li>
+						aria-hidden="true"></i><span><?php echo $lang['MENU_LENT']; ?></span></a></li><?php } ?>
+				<?php if($ebook_num != 0) { ?><li class="menu ebooks <?php if(strpos($path, 'ebook') !== FALSE) { echo 'active'; } ?>"><a href="./display?doctype=ebook"><i class="fa fa-plug"
+						aria-hidden="true"></i> <span><?php echo $lang['MENU_EBOOKS']; ?></span></a></li><?php } ?>
 			</ul>
 			<div class="clear"></div>
 		</section>

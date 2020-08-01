@@ -68,12 +68,20 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
         $insert_author = $_POST['author'];
         $insert_genre = $_POST['genre'];
         $insert_title = $_POST['title'];
+				if ($_POST['o_title'] == '') {
+		    	$insert_o_title = $_POST['title'];
+				} else {
+					$insert_o_title = $_POST['o_title'];
+				}
         $insert_isbn = $_POST['isbn'];
         $insert_publisher = $_POST['publisher'];
         $insert_year = $_POST['year'];
+        $insert_language = $_POST['language'];
         $insert_description = $_POST['description'];
         $insert_imgpath = $_POST['imgpath'];
         $insert_location = $_POST['location'];
+				$insert_series = $_POST['series'];
+		    $insert_volume = $_POST['volume'];
         $insert_filename = $filename;
 
         if (isset($_POST['islent'])) {
@@ -85,12 +93,16 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
             if (!isset($_POST['isebook'])) {
                 if ($id = $collection->where('id', '=', $_POST['id'])->update(array(
                     'title' => $insert_title,
+										'o_title' => $insert_o_title,
                     'isbn' => $insert_isbn,
                     'publisher' => $insert_publisher,
                     'year' => $insert_year,
+                    'language' => $insert_language,
                     'description' => $insert_description,
                     'imgpath' => $insert_imgpath,
                     'location' => $insert_location,
+										'series' => $insert_series,
+				            'volume' => $insert_volume,
                     'islent' => $insert_islent,
                     'lentto' => $insert_lentto,
                     'lentat' => $insert_lentat,
@@ -101,12 +113,16 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
             } else {
                 if ($id = $collection->where('id', '=', $_POST['id'])->update(array(
                     'title' => $insert_title,
+										'o_title' => $insert_o_title,
                     'isbn' => $insert_isbn,
                     'publisher' => $insert_publisher,
                     'year' => $insert_year,
+										'language' => $insert_language,
                     'description' => $insert_description,
                     'imgpath' => $insert_imgpath,
                     'location' => $insert_location,
+										'series' => $insert_series,
+				            'volume' => $insert_volume,
                     'islent' => $insert_islent,
                     'lentto' => $insert_lentto,
                     'lentat' => $insert_lentat,
@@ -123,13 +139,17 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
 
                 if ($id = $collection->where('id', '=', $_POST['id'])->update(array(
                     'title' => $insert_title,
+										'o_title' => $insert_o_title,
                     'isbn' => $insert_isbn,
                     'publisher' => $insert_publisher,
                     'year' => $insert_year,
+										'language' => $insert_language,
                     'description' => $insert_description,
                     'imgpath' => $insert_imgpath,
                     'location' => $insert_location,
-					'islent' =>'off',
+										'series' => $insert_series,
+				            'volume' => $insert_volume,
+										'islent' =>'off',
                     'lentto' => NULL,
                     'lentat' => NULL,
                     'a_str' => $insert_author,
@@ -142,12 +162,16 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
 
                 if ($id = $collection->where('id', '=', $_POST['id'])->update(array(
                     'title' => $insert_title,
+										'o_title' => $insert_o_title,
                     'isbn' => $insert_isbn,
                     'publisher' => $insert_publisher,
                     'year' => $insert_year,
+										'language' => $insert_language,
                     'description' => $insert_description,
                     'imgpath' => $insert_imgpath,
                     'location' => $insert_location,
+										'series' => $insert_series,
+				            'volume' => $insert_volume,
                     'a_str' => $insert_author,
                     'g_str' => $insert_genre,
                     'doctype' => 'ebook',
@@ -235,7 +259,13 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
 		<label class="add-new-item"><i class="fa fa-font" aria-hidden="true"></i>
             <?php echo $lang['ADD_TITLE_LABEL'] ?></label> <input
 			class="add-item-input" type="text" name="title"
-			value="<?php echo $item->title() ?>" required /> <label
+			value="<?php echo $item->title() ?>" required />
+			<label class="add-new-item">
+				<i class="fa fa-language" aria-hidden="true"></i>
+        <?php echo $lang['ADD_O_TITLE_LABEL'] ?>
+			</label>
+			<input class="add-item-input" type="text" name="o_title" value="<?php echo $item->o_title() ?>" />
+			<label
 			class="add-new-item"><i class="fa fa-barcode" aria-hidden="true"></i>
             <?php echo $lang['ADD_ISBN_LABEL'] ?></label> <input
 			class="add-item-input" type="text" name="isbn"
@@ -246,7 +276,11 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
 			class="add-new-item"><i class="fa fa-calendar" aria-hidden="true"></i>
             <?php echo $lang['ADD_YEAR_LABEL'] ?></label> <input
 			class="add-item-input" type="text" name="year"
-			value="<?php echo $item->year() ?>" /> <label class="add-new-item"><i
+			value="<?php echo $item->year() ?>" /> <label
+			class="add-new-item"><i class="fa fa-globe" aria-hidden="true"></i>
+            <?php echo $lang['ADD_LANGUAGE_LABEL'] ?></label> <input
+			class="add-item-input" type="text" name="language"
+			value="<?php echo $item->language() ?>" /><label class="add-new-item"><i
 			class="fa fa-tag" aria-hidden="true"></i><?php echo $lang['ADD_GENRE_LABEL'] ?></label>
                 <?php $genres = $db->table('genres')->select('genre')->where('book_id', '=', $bookid)->all(); ?>
                 <input class="add-item-input" type="text" name="genre"
@@ -257,6 +291,17 @@ if (isset($_FILES['files']) && $_FILES['files'] != '') {
 			value="<?php echo $item->imgpath() ?>" /> <label class="add-new-item"><i
 			class="fa fa-align-left" aria-hidden="true"></i> <?php echo $lang['ADD_DESCRIPTION_LABEL'] ?></label>
 		<textarea class="add-item-input" type="text" name="description"><?php echo $item->description() ?></textarea>
+		<label class="add-new-item">
+			<i class="fa fa-clone" aria-hidden="true"></i>
+			<?php echo $lang['ADD_SERIES_LABEL'] ?>
+		</label>
+		<input class="add-item-input" type="text" name="series" value="<?php echo $item->series() ?>"/>
+
+		<label class="add-new-item">
+			<i class="fa fa-list-ol" aria-hidden="true"></i>
+			<?php echo $lang['ADD_VOLUME_LABEL'] ?>
+		</label>
+		<input class="add-item-input" type="number" name="volume" value="<?php echo $item->volume() ?>" />
 		<label class="add-new-item"><i class="fa fa-compass"
 			aria-hidden="true"></i><?php echo $lang['ADD_LOCATION_LABEL'] ?></label>
 		<input class="add-item-input" type="text" name="location"

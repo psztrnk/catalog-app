@@ -56,12 +56,16 @@ $lang['ADDED_SUCCESS'] = 'Könyv sikeresen hozzáadva a gyűjteményhez. ';
 $lang['ADDED_SUCCESS_REDIRECT'] = 'Könyv adatlapjának megtekintése';
 $lang['ADD_AUTHOR_LABEL'] = 'Szerző<span>(k) &ndash; pontosvesszővel (;) elválasztva</span>';
 $lang['ADD_TITLE_LABEL'] = 'Cím';
+$lang['ADD_O_TITLE_LABEL'] = 'Eredeti cím <span> &ndash; hagyd üresen, ha azonos a Címmel</span>';
 $lang['ADD_ISBN_LABEL'] = 'ISBN';
 $lang['ADD_PUBLISHER_LABEL'] = 'Kiadó';
 $lang['ADD_YEAR_LABEL'] = 'Kiadás éve';
+$lang['ADD_LANGUAGE_LABEL'] = 'Nyelv';
 $lang['ADD_GENRE_LABEL'] = 'Műfaj<span>(ok) &ndash; vesszővel (,) elválasztva</span>';
 $lang['ADD_COVER_LABEL'] = 'Borítókép URL';
 $lang['ADD_DESCRIPTION_LABEL'] = 'Ismertető';
+$lang['ADD_SERIES_LABEL'] = 'A könyv az alábbi sorozat része';
+$lang['ADD_VOLUME_LABEL'] = 'Kötet száma<span> &ndash; csak számok</span>';
 $lang['ADD_LOCATION_LABEL'] = 'Könyv helye <span> Szoba, polc, sor stb.</span>';
 $lang['ADD_IFLENT_LABEL'] = 'Ezt a könyvet kölcsönadtam';
 $lang['ADD_LENTTO_LABEL'] = 'Neki adtam kölcsön';
@@ -92,8 +96,11 @@ $lang['DISPLAY_AUTHOR_LABEL'] = 'Szerző';
 $lang['DISPLAY_ISBN_LABEL'] = 'ISBN szám';
 $lang['DISPLAY_PUBLISHER_LABEL'] = 'Kiadó';
 $lang['DISPLAY_YEAR_LABEL'] = 'Kiadás éve';
+$lang['DISPLAY_LANGUAGE_LABEL'] = 'Nyelv';
+$lang['DISPLAY_O_TITLE_LABEL'] = 'Eredeti cím';
 $lang['DISPLAY_GENRE_LABEL'] = 'Műfaj';
 $lang['DISPLAY_DESCRIPTION_LABEL'] = 'Ismertető';
+$lang['DISPLAY_SERIES_LABEL'] = 'Ez a könyv egy sorozat része';
 $lang['DISPLAY_LOCATION_LABEL'] = 'Könyv helye';
 $lang['DISPLAY_LENT_NOTE'] = 'Ezt a könyvet kölcsönadtad';
 $lang['DISPLAY_LENTTO_REF'] = ' neki: ';
@@ -134,6 +141,34 @@ $lang['DISPLAY_YEAR_TITLE_SUFFIX'] = ' évben kiadott könyvek';
 $lang['DISPLAY_YEAR_OWN'] = 'A gyűjteményedben ';
 $lang['DISPLAY_YEAR_PUBLISHEDIN'] = ' van, amelyet ';
 $lang['DISPLAY_YEAR_SUFFIX'] = ' évben adtak ki.';
+
+// display original title
+
+$lang['DISPLAY_O_TITLE_TITLE'] = 'Könyvek, melyek eredeti címe ';
+$lang['DISPLAY_O_TITLE_TITLE_SUFFIX'] = '';
+$lang['DISPLAY_O_TITLE_OWN'] = 'A gyűjteményedben ';
+$lang['DISPLAY_O_TITLE_PUBLISHEDIN'] = ' van, amelynek eredeti címe "';
+$lang['DISPLAY_O_TITLE_SUFFIX'] = '".';
+
+// display Language
+
+$lang['DISPLAY_LANGUAGE_TITLE'] = '';
+$lang['DISPLAY_LANGUAGE_TITLE_SUFFIX'] = ' nyelvű könyvek';
+$lang['DISPLAY_LANGUAGE_OWN'] = 'A gyűjteményedben ';
+$lang['DISPLAY_LANGUAGE_PUBLISHEDIN'] = ' van, amelyet ';
+$lang['DISPLAY_LANGUAGE_SUFFIX'] = ' nyelven írtak.';
+
+// display series
+
+$lang['DISPLAY_SERIES_TITLE'] = 'Könyvek ebben a sorozatban: ';
+$lang['DISPLAY_SERIES_TITLE_SUFFIX'] = '';
+$lang['DISPLAY_LANGUAGE_OWN'] = 'A gyűjteményedben ';
+$lang['DISPLAY_LANGUAGE_PUBLISHEDIN'] = ' van, amely része a(z) "';
+$lang['DISPLAY_LANGUAGE_SUFFIX'] = '" sorozatnak.';
+
+$lang['VOLUME_PREFIX'] = '';
+$lang['VOLUME_SUFFIX'] = '. kötet';
+$lang['VOLUME'] = 'Kötet';
 
 // display ebooks
 
@@ -207,12 +242,15 @@ $lang['SFIELD_AUTHOR'] = ' a szerzőségi adatokban';
 $lang['SFIELD_PUBLISH'] = ' a kiadási adatokban';
 $lang['SFIELD_ISBN'] = ' az ISBN számban';
 $lang['SFIELD_GENRE'] = ' a műfaji adatokban';
+$lang['SFIELD_LANGUAGE'] = ', mint nyelv';
 $lang['SFIELD_DESCRIPTION'] = ' az ismeretetőkben';
+$lang['SFIELD_SERIES'] = ' a sorozatok között';
 $lang['SFIELD_LOCATION'] = ' a könyv helyeként';
 $lang['SFIELD_LENT'] = ' a kölcsönzési adatokban';
 $lang['SFIELD_ALL'] = ' minden mezőben';
 $lang['SEARCH_REASULTCOUNT_PREFIX'] = 'Összesen ';
-$lang['SEARCH_REASULTCOUNT_SUFFIX'] = ' találat van a keresésre.';
+$lang['SEARCH_REASULTCOUNT_SINGULAR_SUFFIX'] = ' találat van a keresésre.';
+$lang['SEARCH_REASULTCOUNT_PLURAL_SUFFIX'] = ' találat van a keresésre.';
 $lang['SEARCH_NORESULTS'] = 'Nincs találat.';
 
 // collection
@@ -254,7 +292,9 @@ $lang['HELP_SEARCH_CONTENT'] = '<p>Egyszerű kereséshez írd be a keresett szó
 <li><strong><code>publish: [keresőszó]</code></strong>: két mezőben keres: a kiadók és a kiadás évei között. A <code>publish: iroda</code> kereső-kifejezésre a Catalog kiadja az "Iroda Könyvkiadó" által kiadott műveket, de nem listázza sem az irodádban tartott könyveidet, sem az "Iroda a lakásban" című művet. A <code>publish: 199</code> kifejezéssel lekeresheted az 1990-es években kiadott könyveidet, de nem keverednek a találatok közé azok a művek, melyeknek az ISBN-jében szerepel a "199";</li>
 <li><strong><code>isbn: [keresőszó]</code></strong>: az <code>isbn: 199</code> kifejezésre indított kereséskor a Catalog megjeleníti azokat a műveket, melyeknek az ISBN-jében szerepel a "199", de nem listázza azokat, melyeket az 1990-es években adtak ki;</li>
 <li><strong><code>genre: [keresőszó]</code></strong>: a <code>genre: iroda</code> kifejezésre keresve a Catalog azokat a könyveket jeleníti meg, amelynek műfaj-címkéi között szerepel az "iroda" szó, nem listázza viszont sem az irodádban tartott könyveidet, sem pedig az "Iroda Könyvkiadó" által kiadott műveket;</li>
+<li><strong><code>lang: [keresőszó]</code></strong>: a <code>lank: angol</code> kifejezésre keresve a Catalog azokat a könyveket jeleníti meg, amelynek nyelvi adataként szerepel az "angol", nem listázza viszont "Az angol beteg" című (magyar nyelvű) könyvet;</li>
 <li><strong><code>description: [keresőszó]</code></strong>: a <code>description: kovács alajos</code> kereső-kifejezés akkor lehet nagyon hasznos, ha például arra emlékszel, hogy egy regény főszereplőjének neve "Kovács Alajos", viszont nem akarod megjeleníteni a találatok között azokat a műveket, melyeknek a szerzőjét hívják így;</li>
+<li><strong><code>series: [keresőszó]</code></strong>: a <code>series: példa</code> kifejezésre keresve a Catalog megjeleníti a "Példasorozat" köteteit, de a "Példabeszédek könyve" című művet nem (hacsak nem része a Példasorozatnak);</li>
 <li><strong><code>location: [keresőszó]</code></strong>: a <code>location: iroda</code> kereső-kifejezésre válaszul a Catalog kilistázza az irodádban tartott könyveid, a listában azonban nem fognak megjelenni az  "Iroda Könyvkiadó" által kiadott művek, vagy az "Iroda a lakásban";</li>
 <li><strong><code>lent: [keresőszó]</code></strong>: két mezőben keres: a kölcsönvevő személyek és a kölcsönadás dátumai között. A <code>lent: kovács jános</code> kifejezésre a Catalog listáz minden olyan könyvet, amit Janinak adtál kölcsön, nem jelennek meg azonban a Kovács János nevű szerzők által írott művek. A <code>lent: 2016</code> kifejezésre keresve minden olyan könyv megjelenik, amelyet 2016-ban adtál kölcsön (egyébként ezeket időszerű lenne lassan visszakérni).</li>
 </ul>';

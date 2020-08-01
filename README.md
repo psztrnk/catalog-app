@@ -4,6 +4,13 @@ Catalog is a PHP + MySql application to manage your home library. If you don't c
 
 Read on, or see [the Catalog Wiki](https://github.com/psztrnk/catalog/wiki) for more information.
 
+## Updating to version 1.1
+
+1. Backup your database and the `config` folder of your Catalog installation.
+2. Download and unpack the `.zip` file.
+3. Overwrite all files **except your `config` folder** of your Catalog installation with the contents of the `zip`.
+4. Basically that's it. The update script will handle the rest.
+
 ## Features
 
 With Catalog, you can
@@ -15,7 +22,9 @@ With Catalog, you can
 	- year of publishing,
 	- genre(s),
 	- cover image,
-	- description and
+	- description,
+	- language,
+	- series information and
 	- location;
 - edit and delete existing books;
 - manage books lent based on
@@ -25,7 +34,7 @@ With Catalog, you can
 	- authors,
 	- publishers,
 	- years of publishing,
-	- genres and 
+	- genres and
 	- lent status;
 - manage your ebooks with ebook file upload;
 - search your collection based on all fields (simple search) or only certain fields (smart search);
