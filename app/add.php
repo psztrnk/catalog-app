@@ -71,7 +71,12 @@ if (isset($_FILES['files'])) {
     $insert_imgpath = $_POST['imgpath'];
     $insert_location = $_POST['location'];
     $insert_series = $_POST['series'];
-    $insert_volume = $_POST['volume'];
+	if (is_int( $_POST['volume'])) {
+    	$insert_volume = $_POST['volume'];
+    	}
+    	else {
+    	$insert_volume = NULL;
+    	}    
     $insert_owner = $_SESSION['user_id'];
     if(isset($filename)) {
         $insert_filename = $filename;
